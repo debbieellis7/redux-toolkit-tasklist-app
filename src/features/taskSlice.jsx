@@ -24,7 +24,11 @@ export const fetchTodo = createAsyncThunk("tasks/fetchTodo", async () => {
 const taskSlice = createSlice({
   name: "tasks",
   initialState,
-  reducers: {},
+  reducers: {
+    deleteTask: (state, action) => {
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodo.pending, (state) => {
@@ -42,4 +46,5 @@ const taskSlice = createSlice({
   },
 });
 
+export const { deleteTask } = taskSlice.actions;
 export default taskSlice.reducer;

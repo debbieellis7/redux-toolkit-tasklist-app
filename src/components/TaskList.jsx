@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTodo } from "../features/taskSlice";
+import { fetchTodo, deleteTask } from "../features/taskSlice";
 
 const TaskList = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,11 @@ const TaskList = () => {
 
   useEffect(() => {
     dispatch(fetchTodo());
-  }, []);
+  }, [dispatch]);
+
+  const handleDelete = (id) => {
+    dispatch(deleteTask(id));
+  };
 
   if (loading) {
     return <p>Tasks loading ...</p>;
@@ -45,6 +49,15 @@ const TaskList = () => {
                   Status:{" "}
                   <span className="italic underline">{task.status}</span>
                 </p>
+              </div>
+
+              <div className="flex space-x-2">
+                <button
+                  className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+                  onClick={() => handleDelete(task.id)}
+                >
+                  delete
+                </button>
               </div>
             </li>
           ))}

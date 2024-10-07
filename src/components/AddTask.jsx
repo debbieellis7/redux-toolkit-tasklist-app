@@ -29,7 +29,7 @@ const AddTask = () => {
 
   return (
     <form className="mb-6" onSubmit={handleSubmit}>
-      <h2 className="text-x1 font-semibold mb-3 text-indigo-500">
+      <h2 className="text-x1 font-semibold mb-3 text-green-500">
         Add New Task
       </h2>
       <div className="mb-4">
@@ -64,7 +64,7 @@ const AddTask = () => {
       </div>
       <button
         type="submit"
-        className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700"
+        className="w-full px-4 py-2 bg-green-500 text-white font-semibold border-b-4 border-green-700 hover:bg-green-400 hover:border-green-500 rounded-lg shadow-md transition duration-300 ease-in-out"
       >
         Add Task
       </button>

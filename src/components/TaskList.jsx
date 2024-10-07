@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTodo, deleteTask } from "../features/taskSlice";
+import EditTask from "./EditTask";
 
 const TaskList = () => {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ const TaskList = () => {
               </div>
 
               <div className="flex space-x-2">
+                <EditTask task={task} />
                 <button
                   className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
                   onClick={() => handleDelete(task.id)}

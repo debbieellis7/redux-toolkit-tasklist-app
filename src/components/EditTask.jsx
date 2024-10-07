@@ -17,7 +17,7 @@ const EditTask = ({ task }) => {
         title,
         description,
         status,
-      })
+      }),
     );
     setIsEdit(false);
   };

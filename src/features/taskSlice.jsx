@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchTodo = createAsyncThunk("tasks/fetchTodo", async () => {
   const response = await fetch(
-    "https://jsonplaceholder.typicode.com/todos?_limit=8"
+    "https://jsonplaceholder.typicode.com/todos?_limit=8",
   );
   const data = await response.json();
 
@@ -30,7 +30,7 @@ const taskSlice = createSlice({
     },
     editTask: (state, action) => {
       state.tasks = state.tasks.map((task) =>
-        task.id === action.payload.id ? action.payload : task
+        task.id === action.payload.id ? action.payload : task,
       );
     },
     deleteTask: (state, action) => {

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTodo, deleteTask } from "../features/taskSlice";
+import { fetchTodo, deleteTask, setStatusFilter } from "../features/taskSlice";
 import EditTask from "./EditTask";
 
 const TaskList = () => {
@@ -9,10 +9,15 @@ const TaskList = () => {
   const tasks = useSelector((state) => state.tasks.tasks);
   const loading = useSelector((state) => state.tasks.loading);
   const error = useSelector((state) => state.tasks.error);
+  const status = useSelector((state) => state.tasks.status);
 
   useEffect(() => {
     dispatch(fetchTodo());
   }, [dispatch]);
+
+  const handleStatusChange = (e) => {
+    dispatch(setStatusFilter(e.target.value));
+  };
 
   const handleDelete = (id) => {
     dispatch(deleteTask(id));
@@ -26,14 +31,36 @@ const TaskList = () => {
     return <p>There is an error {error}</p>;
   }
 
+  // Filter the tasks based on selected status
+  const filteredTasks = tasks.filter((task) => {
+    if (status === "All") {
+      // Show all tasks
+      return true;
+    }
+
+    // Show filtered tasks
+    return task.status === status;
+  });
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Tasks</h2>
+
+        <select
+          className="w-38 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={status}
+          onChange={handleStatusChange}
+        >
+          <option value="All">All</option>
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
       </div>
 
       <ul className="space-y-4">
-        {tasks.map((task, index) => (
+        {filteredTasks.map((task, index) => (
           <li
             key={index}
             className="bg-gray-50 p-4 rounded-md shadow-sm flex justify-between items-center"

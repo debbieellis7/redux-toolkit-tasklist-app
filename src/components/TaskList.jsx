@@ -1,12 +1,17 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTodo, deleteTask, setStatusFilter } from "../features/taskSlice";
+import {
+  fetchTodo,
+  deleteTask,
+  setStatusFilter,
+  selectFilteredTasks,
+} from "../features/taskSlice";
 import EditTask from "./EditTask";
 
 const TaskList = () => {
   const dispatch = useDispatch();
 
-  const tasks = useSelector((state) => state.tasks.tasks);
+  const filteredTasks = useSelector(selectFilteredTasks);
   const loading = useSelector((state) => state.tasks.loading);
   const error = useSelector((state) => state.tasks.error);
   const status = useSelector((state) => state.tasks.status);
@@ -31,17 +36,6 @@ const TaskList = () => {
     return <p>There is an error {error}</p>;
   }
 
-  // Filter the tasks based on selected status
-  const filteredTasks = tasks.filter((task) => {
-    if (status === "All") {
-      // Show all tasks
-      return true;
-    }
-
-    // Show filtered tasks
-    return task.status === status;
-  });
-
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
@@ -60,9 +54,9 @@ const TaskList = () => {
       </div>
 
       <ul className="space-y-4">
-        {filteredTasks.map((task, index) => (
+        {filteredTasks.map((task) => (
           <li
-            key={index}
+            key={task.id}
             className="bg-gray-50 p-4 rounded-md shadow-sm flex justify-between items-center"
           >
             <div>

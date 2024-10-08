@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { editTask } from "../features/taskSlice";
 
@@ -10,6 +10,13 @@ const EditTask = ({ task }) => {
   const [description, setDescription] = useState(task.description);
   const [status, setStatus] = useState(task.status);
 
+  // Update state whenever task prop changes
+  useEffect(() => {
+    setTitle(task.title);
+    setDescription(task.description);
+    setStatus(task.status);
+  }, [task]);
+
   const handleEdit = () => {
     dispatch(
       editTask({
@@ -17,10 +24,11 @@ const EditTask = ({ task }) => {
         title,
         description,
         status,
-      }),
+      })
     );
     setIsEdit(false);
   };
+
   return (
     <div>
       {isEdit ? (

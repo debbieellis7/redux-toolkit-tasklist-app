@@ -10,7 +10,7 @@ const EditTask = ({ task }) => {
   const [description, setDescription] = useState(task.description);
   const [status, setStatus] = useState(task.status);
 
-  // Update state whenever task prop changes
+  // This ensures the input fields reflect the updated task values when the task prop is updated.
   useEffect(() => {
     setTitle(task.title);
     setDescription(task.description);

@@ -6,7 +6,8 @@ import {
   setStatusFilter,
   selectFilteredTasks,
 } from "../features/taskSlice";
-import EditTask from "./EditTask";
+import TaskFilter from "./TaskFilter";
+import TaskItem from "./TaskItem";
 
 const TaskList = () => {
   const dispatch = useDispatch();
@@ -41,48 +42,12 @@ const TaskList = () => {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Tasks</h2>
 
-        <select
-          className="w-38 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={status}
-          onChange={handleStatusChange}
-        >
-          <option value="All">All</option>
-          <option value="To Do">To Do</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Completed">Completed</option>
-        </select>
+        <TaskFilter status={status} onChange={handleStatusChange} />
       </div>
 
       <ul className="space-y-4">
         {filteredTasks.map((task) => (
-          <li
-            key={task.id}
-            className="bg-gray-50 p-4 rounded-md shadow-sm flex justify-between items-center"
-          >
-            <div>
-              <h3 className="text-lg font-medium text-gray-800">
-                {task.title}
-              </h3>
-
-              {task.description && (
-                <p className="text-gray-600">{task.description}</p>
-              )}
-
-              <p className="mt-1 text-sm font-semibold">
-                Status: <span className="italic underline">{task.status}</span>
-              </p>
-            </div>
-
-            <div className="flex space-x-2">
-              <EditTask task={task} />
-              <button
-                className="px-3 py-1.5 bg-red-500 text-white font-semibold border-b-4 border-red-700 hover:bg-red-400 hover:border-red-500 rounded-lg shadow-md transition duration-300 ease-in-out"
-                onClick={() => handleDelete(task.id)}
-              >
-                Delete
-              </button>
-            </div>
-          </li>
+          <TaskItem key={task.id} task={task} onDelete={handleDelete} />
         ))}
       </ul>
     </div>
